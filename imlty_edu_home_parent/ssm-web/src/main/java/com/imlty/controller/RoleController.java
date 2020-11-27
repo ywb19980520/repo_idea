@@ -1,6 +1,7 @@
 package com.imlty.controller;
 
 import com.imlty.domain.Menu;
+import com.imlty.domain.ResourceCategory;
 import com.imlty.domain.ResponseResult;
 import com.imlty.domain.Role;
 import com.imlty.service.MenuService;
@@ -81,6 +82,17 @@ public class RoleController {
     public ResponseResult deleteRole(Integer id){
         roleService.deleteRole(id);
         return new ResponseResult(true,200,"删除角色成功",null);
+    }
+
+    /**
+     *  回显 根据角色id查询角色的资源信息
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/findResourceListByRoleId")
+    public ResponseResult findResourceListByRoleId(Integer roleId){
+        List<ResourceCategory> list = roleService.findResourceListByRoleId(roleId);
+        return new ResponseResult(true,200,"回显响应成功",list);
     }
 
 }

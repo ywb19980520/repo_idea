@@ -1,6 +1,8 @@
 package com.imlty.service.impl;
 
 import com.imlty.dao.RoleMapper;
+import com.imlty.domain.Resource;
+import com.imlty.domain.ResourceCategory;
 import com.imlty.domain.Role;
 import com.imlty.domain.Role_menu_relation;
 import com.imlty.service.RoleService;
@@ -57,5 +59,26 @@ public class RoleServiceImpl implements RoleService {
         roleMapper.deleteRoleContextMenuByRoleId(id);
         //2.删除角色信息
         roleMapper.deleteRole(id);
+    }
+
+    /**
+     * 根据角色id查询相关的 资源目录 以及对应的资源信息
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<ResourceCategory> findResourceListByRoleId(Integer roleId) {
+        //1.查询目录
+        List<ResourceCategory> categoryList = roleMapper.findResourceCategoryListByRoleId(roleId);
+        //判断不为空处理
+        if (categoryList == null){
+            return null;
+        }
+        //2.查询资源目录信息
+        for (ResourceCategory resourceCategory : categoryList) {
+            List<Resource> resourceList = roleMapper.findResourceListByRoleId(roleId, resourceCategory.getId());
+            resourceCategory.setResourceList(resourceList);
+        }
+        return categoryList;
     }
 }

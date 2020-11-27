@@ -30,5 +30,25 @@
     <delete id="deleteRole" parameterType="int">
         delete from roles where id = #{id}
     </delete>
-
+    <!--根据角色id 查询当前角色拥有的资源分类信息-->
+    <select id="findResourceCategoryListByRoleId" parameterType="int" resultType="com.imlty.domain.ResourceCategory">
+        SELECT DISTINCT
+          rc.*
+        FROM
+          role_resource_relation rr
+          INNER JOIN resource r
+            ON rr.`resource_id` = r.`id`
+            INNER JOIN resource_category rc
+            ON rc.id = r.category_id
+            where rr.`role_id` =#{roleId}
+    </select>
+    <select id="findResourceListByRoleId"  resultType="resource">
+        SELECT DISTINCT
+          r.*
+        FROM
+          role_resource_relation rr
+          INNER JOIN resource r
+            ON rr.`resource_id` = r.`id`
+        WHERE rr.`role_id` = #{roleId} and  category_id= #{c_id}
+    </select>
 </mapper>

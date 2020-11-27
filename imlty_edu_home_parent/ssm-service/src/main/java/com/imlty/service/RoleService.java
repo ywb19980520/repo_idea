@@ -1,5 +1,6 @@
 package com.imlty.service;
 
+import com.imlty.domain.ResourceCategory;
 import com.imlty.domain.Role;
 import com.imlty.vo.RoleMenuVO;
 
@@ -24,4 +25,11 @@ public interface RoleService {
      * 删除角色
      */
     void deleteRole(Integer id);
+
+    /**
+     * 根据角色id查询目录信息以及相关的资源信息
+     * @param roleId
+     * @return
+     */
+    List<ResourceCategory>findResourceListByRoleId(Integer roleId);
 }

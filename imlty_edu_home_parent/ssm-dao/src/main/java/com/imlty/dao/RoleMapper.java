@@ -1,7 +1,10 @@
 package com.imlty.dao;
 
+import com.imlty.domain.Resource;
+import com.imlty.domain.ResourceCategory;
 import com.imlty.domain.Role;
 import com.imlty.domain.Role_menu_relation;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,4 +36,14 @@ public interface RoleMapper {
         删除角色
         */
     void deleteRole(Integer id);
+
+    List<ResourceCategory> findResourceCategoryListByRoleId(Integer roleId);
+
+    /**
+     * 根据角色id 和 资源目录id 查询信息
+     * @param roleId
+     * @param c_id
+     * @return
+     */
+    List<Resource> findResourceListByRoleId(@Param("roleId") Integer roleId,@Param("c_id")Integer c_id);
 }

@@ -1,6 +1,8 @@
 package com.imlty.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ResourceCategory {
 
@@ -11,6 +13,16 @@ public class ResourceCategory {
     private Date updatedTime;
     private String createdBy;
     private String updatedBy;
+    //资源集合 一对多
+    private List<Resource> resourceList = new ArrayList<>();
+
+    public List<Resource> getResourceList() {
+        return resourceList;
+    }
+
+    public void setResourceList(List<Resource> resourceList) {
+        this.resourceList = resourceList;
+    }
 
     public Integer getId() {
         return id;
