@@ -62,8 +62,8 @@ public interface UserMapper {
     List<Resource> findResourceByRoleId(List<Integer> ids);
 
     void test();
-    void test3();
-    void test5();
-    void test8();
-    void test9();
+    void test33();
+    void test55();
+    void test88();
+    void test99();
 }
