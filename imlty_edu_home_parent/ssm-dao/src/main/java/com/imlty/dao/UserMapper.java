@@ -60,4 +60,6 @@ public interface UserMapper {
      * @return
      */
     List<Resource> findResourceByRoleId(List<Integer> ids);
+
+    void test();
 }
