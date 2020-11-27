@@ -18,7 +18,11 @@ public class RescourceController {
     @Autowired
     private ResourceService resourceService;
 
-
+    /**
+     * 查询所有资源信息
+     * @param resourceVO
+     * @return
+     */
     @PostMapping("/findAllResource")
     public ResponseResult findAllResource(@RequestBody ResourceVO resourceVO){
         PageInfo<Resource> pageInfo = resourceService.findAllResourceByPage(resourceVO);

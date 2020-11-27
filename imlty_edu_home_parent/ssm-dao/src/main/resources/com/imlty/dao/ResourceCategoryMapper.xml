@@ -6,4 +6,25 @@
     <select id="findAllResourceCategory" resultType="com.imlty.domain.ResourceCategory">
         select * from resource_category
     </select>
+    <!--修改资源目录信息-->
+    <update id="updateResourceCategory" parameterType="com.imlty.domain.ResourceCategory">
+        UPDATE resource_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sort != null and sort != ''">
+                sort = #{sort},
+            </if>
+                createdTime = #{createdTime},
+                updatedTime = #{updatedTime},
+                createdBy = #{createdBy},
+                updatedBy = #{updatedBy}
+        </trim>
+        <where>
+            <if test="id != null and id != '' ">
+                id = #{id}
+            </if>
+        </where>
+    </update>
 </mapper>

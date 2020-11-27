@@ -10,4 +10,16 @@ public interface ResourceCategoryService {
      * @return
      */
     List<ResourceCategory> findAllResourceCategory();
+
+    /**
+     *  修改资源目录信息
+     * @param resourceCategory
+     */
+    void updateResourceCategory(ResourceCategory resourceCategory);
+
+    /**
+     * 新增资源目录信息
+     * @param resourceCategory
+     */
+    void saveResourceCategory(ResourceCategory resourceCategory);
 }

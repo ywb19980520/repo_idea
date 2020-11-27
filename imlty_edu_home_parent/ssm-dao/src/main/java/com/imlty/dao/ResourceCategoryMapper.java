@@ -11,4 +11,17 @@ public interface ResourceCategoryMapper {
      * @return
      */
     List<ResourceCategory> findAllResourceCategory();
+
+    /**
+     * 修改目录信息
+     * @param resourceCategory
+     */
+    void updateResourceCategory(ResourceCategory resourceCategory);
+
+    /**
+     * 新增目录
+     * @param resourceCategory
+     */
+    void saveResourceCategory(ResourceCategory resourceCategory);
+
 }
