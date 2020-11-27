@@ -24,4 +24,10 @@ public interface ResourceCategoryMapper {
      */
     void saveResourceCategory(ResourceCategory resourceCategory);
 
+    /**
+     * 根据id删除资源目录
+     * @param id
+     */
+    void deleteResourceCategoryById(Integer id);
+
 }

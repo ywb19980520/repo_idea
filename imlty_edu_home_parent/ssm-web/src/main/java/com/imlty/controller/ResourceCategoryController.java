@@ -49,13 +49,13 @@ public class ResourceCategoryController {
     }
 
     /**
-     *
+     * 删除资源目录
      * @param id
      * @return
      */
     @RequestMapping("/deleteResourceCategory")
     public ResponseResult deleteResourceCategory(Integer id){
-
+        resourceCategoryService.deleteResourceCategory(id);
         return new ResponseResult(true,200,"删除资源目录成功",null);
     }
 

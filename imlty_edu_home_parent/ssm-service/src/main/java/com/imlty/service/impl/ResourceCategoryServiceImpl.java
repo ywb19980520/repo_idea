@@ -46,4 +46,9 @@ public class ResourceCategoryServiceImpl implements ResourceCategoryService {
         resourceCategory.setUpdatedTime(date);
         resourceCategoryMapper.saveResourceCategory(resourceCategory);
     }
+
+    @Override
+    public void deleteResourceCategory(Integer id) {
+        resourceCategoryMapper.deleteResourceCategoryById(id);
+    }
 }

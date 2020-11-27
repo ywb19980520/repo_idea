@@ -22,4 +22,10 @@ public interface ResourceCategoryService {
      * @param resourceCategory
      */
     void saveResourceCategory(ResourceCategory resourceCategory);
+
+    /**
+     * 根据id删除资源目录
+     * @param id
+     */
+    void deleteResourceCategory(Integer id);
 }
