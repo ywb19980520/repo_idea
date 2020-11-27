@@ -63,4 +63,7 @@ public interface UserMapper {
 
     void test();
     void test3();
+    void test5();
+    void test8();
+    void test9();
 }
