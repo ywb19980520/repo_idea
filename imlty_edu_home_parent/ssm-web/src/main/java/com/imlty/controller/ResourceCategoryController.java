@@ -48,4 +48,15 @@ public class ResourceCategoryController {
         return result;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteResourceCategory")
+    public ResponseResult deleteResourceCategory(Integer id){
+
+        return new ResponseResult(true,200,"删除资源目录成功",null);
+    }
+
 }
