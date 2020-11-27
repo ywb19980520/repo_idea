@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imlty.dao.UserMapper">
+    <!--用户分页多条件查询-->
+    <select id="findAllUserByPage" parameterType="com.imlty.vo.UserVO" resultType="user">
+        select * from user
+        <where>
+            <if test="true">
+                and is_del != 1
+            </if>
+            <if test="username != null and username !='' ">
+                and name like concat('%',#{username},'%')
+            </if>
+            <if test="startCreateTime != null and endCreateTime != null">
+                and create_time between #{startCreateTime} and #{endCreateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--根据用户名查询 用户信息-->
+    <select id="login" parameterType="user" resultType="user">
+        select * from user where phone = #{phone}
+    </select>
+
+    <!--清空用户角色中间表-->
+    <delete id="deleteUserContextRole" parameterType="int" >
+        delete from user_role_relation where user_id= #{userId}
+    </delete>
+    <!--给用户添加角色信息-->
+    <insert id="userContextRole" parameterType="com.imlty.domain.User_Role_relation">
+        insert into user_role_relation values(null,#{userId},#{roleId},#{createdTime},#{updatedTime},#{createdBy},#{updatedby})
+    </insert>
+    <!--1.根据用户id 查询关联的角色信息-->
+    <select id="findUserRelationRoleById" parameterType="int" resultType="com.imlty.domain.Role">
+        select r.* from user_role_relation ur right join roles r on r.id = ur.role_id where user_id = #{id}
+    </select>
+    <!--2.根据id查询用户拥有的顶级菜单信息-->
+    <select id="findParentMenuByRoleId" parameterType="java.util.List"
+            resultType="menu">
+        SELECT
+        DISTINCT m.*
+        FROM roles r INNER JOIN role_menu_relation rm ON r.`id` = rm.role_id
+        INNER JOIN menu m ON rm.menu_id = m.id
+        WHERE m.parent_id = -1 AND r.id IN
+        <foreach collection="list" item="item" open="(" separator=","
+                 close=")">
+            #{item}
+        </foreach>
+        GROUP BY m.id
+    </select>
+
+
+    <!-- 3.根据顶级菜单的ID 查找子菜单 -->
+    <select id="findSubMenuByPid" parameterType="int" resultType="menu">
+        select * from menu where id = #{id}
+    </select>
+    <!--4.根据角色的id值 多次遍历查询的资源信息-->
+    <select id="findResourceByRoleId" parameterType="list" resultType="resource">
+        SELECT DISTINCT
+          rs.*
+        FROM
+          roles r
+          INNER JOIN role_resource_relation rr
+            ON r.`id` = rr.`role_id`
+          INNER JOIN resource rs
+            ON rr.`resource_id` = rs.`id`
+        WHERE r.`id` in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

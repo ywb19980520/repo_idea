@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--在dao工程里面-->
+    <!--spring整合mybatis-->
+
+
+
+    <!--引入jdbc.properties文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--1.数据源配置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!--2.sqlSessionFactory注入ioc-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--2.1注入Druid data source-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--2.2对实体类下所有包进行扫描-->
+        <property name="typeAliasesPackage" value="com.imlty.domain"/>
+        <!--2.3加载mybatis核心配置文件-->
+        <property name="configLocation" value="classpath:sqlMapConfig.xml"/>
+
+        <!--配置mybatis的插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <!--指定方言合理化参数等-->
+                    <property name="properties">
+                        <!--方言为mysql-->
+                        <value>helperDialect=mysql</value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!--3.开始mapper映射扫描:基于mapper的底层动态代理完成-->
+    <bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--会对这个包下面的所有mapper接口进行扫描,并生成代理对象存进ioc容器中-->
+        <property name="basePackage" value="com.imlty.dao"/>
+    </bean>
+
+</beans>
